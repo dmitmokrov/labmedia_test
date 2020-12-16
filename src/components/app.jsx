@@ -29,6 +29,11 @@ const App = () => {
       }
   };
 
+  const handleDeleteRowClick = (userId) => {
+    const index = users.findIndex((user) => user.id === userId);
+    setUsers([...users.slice(0, index), ...users.slice(index + 1)]);
+  };
+
   useEffect(() => {
     setIsLoading(true);
     fetch('https://5ebbb8e5f2cfeb001697d05c.mockapi.io/users')
@@ -77,7 +82,7 @@ const App = () => {
         {
           isLoading
             ? <p>Идет загрузка...</p>
-            : <Table users={sortedUsers} searchedUser={searchedUser}/>
+            : <Table users={sortedUsers} searchedUser={searchedUser} deleteRow={handleDeleteRowClick}/>
         }
       </section>
     </Fragment>

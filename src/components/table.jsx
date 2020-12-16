@@ -3,7 +3,7 @@ import TableRow from './table-row';
 import { getFilteredUsers } from '../utils';
 
 const Table = (props) => {
-  const { users, searchedUser } = props;
+  const { users, searchedUser, deleteRow } = props;
   let filteredUsers = users;
   if (searchedUser) {
     filteredUsers = getFilteredUsers(users, searchedUser);
@@ -22,7 +22,7 @@ const Table = (props) => {
       <tbody>
         {
           filteredUsers.map((user) => (
-            <TableRow key={user.id} user={user} />
+            <TableRow key={user.id} user={user} deleteRow={deleteRow}/>
           ))
         }
       </tbody>

@@ -1,8 +1,8 @@
 import React from "react";
 
 const TableRow = (props) => {
-  const { user } = props;
-  const { name, email, registrationDate, rating } = user;
+  const { user, deleteRow } = props;
+  const { id, name, email, registrationDate, rating } = user;
   return (
     <tr>
       <td>{name}</td>
@@ -10,7 +10,7 @@ const TableRow = (props) => {
       <td>{new Date(registrationDate).toLocaleDateString()}</td>
       <td>{rating}</td>
       <td>
-        <button>Удалить</button>
+        <button type="button" onClick={() => deleteRow(id)}>Удалить</button>
       </td>
     </tr>
   );
