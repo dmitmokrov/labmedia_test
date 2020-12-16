@@ -28,8 +28,10 @@ const sortFunction = (sortType) => {
   switch (sortType) {
     case SortType.REGISTRATION_DATE:
       return sortByRegistrationDate;
+
     case SortType.RATING:
       return sortByRating;
+
     default:
       return;
   }
@@ -37,11 +39,14 @@ const sortFunction = (sortType) => {
 
 const App = () => {
   const [sortType, setSortType] = useState(SortType.DEFAULT);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isSortUp, setIsSortUp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const sortedUsers = users.slice().sort(sortFunction(sortType));
+  const sortedUsersByType = users.slice().sort(sortFunction(sortType));
+  const sortedUsers = isSortUp ? sortedUsersByType : sortedUsersByType.reverse();
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('https://5ebbb8e5f2cfeb001697d05c.mockapi.io/users')
       .then((res) => res.json())
       .then((users) => users.map((user) => updateUserToClient(user)))
@@ -64,6 +69,11 @@ const App = () => {
             onClick={(evt) => {
               evt.preventDefault();
               setSortType(SortType.REGISTRATION_DATE);
+              if (sortType === SortType.REGISTRATION_DATE) {
+                setIsSortUp(!isSortUp);
+              } else {
+                setIsSortUp(true);
+              }
             }}
           >
             Дата регистрации
@@ -73,6 +83,11 @@ const App = () => {
             onClick={(evt) => {
               evt.preventDefault();
               setSortType(SortType.RATING);
+              if (sortType === SortType.RATING) {
+                setIsSortUp(!isSortUp);
+              } else {
+                setIsSortUp(true);
+              }
             }}
           >
             Рейтинг
