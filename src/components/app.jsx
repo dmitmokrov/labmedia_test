@@ -1,41 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Table from "./table";
-
-const SortType = {
-  DEFAULT: "DEFAULT",
-  REGISTRATION_DATE: "REGISTRATION_DATE",
-  RATING: "RATING"
-};
-
-const updateUserToClient = (user) => {
-  const updatedUser = Object.assign(
-    {},
-    user,
-    {
-      name: user['username'],
-      registrationDate: user['registration_date']
-    }
-  );
-
-  return updatedUser;
-};
-
-const sortByRating = (a, b) => b.rating - a.rating;
-const sortByRegistrationDate = (a, b) =>
-  new Date(b.registrationDate).getTime() -
-  new Date(a.registrationDate).getTime();
-const sortFunction = (sortType) => {
-  switch (sortType) {
-    case SortType.REGISTRATION_DATE:
-      return sortByRegistrationDate;
-
-    case SortType.RATING:
-      return sortByRating;
-
-    default:
-      return;
-  }
-};
+import { SortType } from '../const';
+import { updateUserToClient, sortFunction } from '../utils';
 
 const App = () => {
   const [sortType, setSortType] = useState(SortType.DEFAULT);
@@ -43,8 +9,25 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchedUser, setSearchedUser] = useState('');
+
+  const isClearButtonVisible = sortType !== SortType.DEFAULT || searchedUser;
   const sortedUsersByType = users.slice().sort(sortFunction(sortType));
   const sortedUsers = isSortUp ? sortedUsersByType : sortedUsersByType.reverse();
+
+  const onClearButtonClick = () => {
+    setSortType(SortType.DEFAULT);
+    setIsSortUp(false);
+    setSearchedUser('');
+  }
+
+  const onSortLinkClick = (sortLinkType) => {
+    setSortType(sortLinkType);
+      if (sortType === sortLinkType) {
+        setIsSortUp(!isSortUp);
+      } else {
+        setIsSortUp(true);
+      }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -63,7 +46,12 @@ const App = () => {
           <input value={searchedUser} onChange={(evt) => {
             setSearchedUser(evt.target.value);
           }} />
-          <button type="button">Очистить фильтр</button>
+          {
+            isClearButtonVisible &&
+            <button type="button" onClick={onClearButtonClick}>
+              Очистить фильтр
+            </button>
+          }
         </form>
         <p>
           Сортировка:
@@ -71,12 +59,7 @@ const App = () => {
             href="#!"
             onClick={(evt) => {
               evt.preventDefault();
-              setSortType(SortType.REGISTRATION_DATE);
-              if (sortType === SortType.REGISTRATION_DATE) {
-                setIsSortUp(!isSortUp);
-              } else {
-                setIsSortUp(true);
-              }
+              onSortLinkClick(SortType.REGISTRATION_DATE);
             }}
           >
             Дата регистрации
@@ -85,12 +68,7 @@ const App = () => {
             href="#!"
             onClick={(evt) => {
               evt.preventDefault();
-              setSortType(SortType.RATING);
-              if (sortType === SortType.RATING) {
-                setIsSortUp(!isSortUp);
-              } else {
-                setIsSortUp(true);
-              }
+              onSortLinkClick(SortType.RATING);
             }}
           >
             Рейтинг

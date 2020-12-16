@@ -1,11 +1,12 @@
 import React from 'react';
 import TableRow from './table-row';
+import { getFilteredUsers } from '../utils';
 
 const Table = (props) => {
   const { users, searchedUser } = props;
   let filteredUsers = users;
   if (searchedUser) {
-    filteredUsers = users.filter((user) => user.name.toLowerCase().includes(searchedUser.toLowerCase()) || user.email.toLowerCase().includes(searchedUser.toLowerCase()));
+    filteredUsers = getFilteredUsers(users, searchedUser);
   }
   return (
     <table>

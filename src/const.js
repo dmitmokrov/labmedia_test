@@ -1,0 +1,5 @@
+export const SortType = {
+  DEFAULT: "DEFAULT",
+  REGISTRATION_DATE: "REGISTRATION_DATE",
+  RATING: "RATING"
+};
