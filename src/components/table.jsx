@@ -2,7 +2,11 @@ import React from 'react';
 import TableRow from './table-row';
 
 const Table = (props) => {
-  const { users } = props;
+  const { users, searchedUser } = props;
+  let filteredUsers = users;
+  if (searchedUser) {
+    filteredUsers = users.filter((user) => user.name.toLowerCase().includes(searchedUser.toLowerCase()) || user.email.toLowerCase().includes(searchedUser.toLowerCase()));
+  }
   return (
     <table>
       <thead>
@@ -15,9 +19,11 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
-          <TableRow key={user.id} user={user} />
-        ))}
+        {
+          filteredUsers.map((user) => (
+            <TableRow key={user.id} user={user} />
+          ))
+        }
       </tbody>
     </table>
   );

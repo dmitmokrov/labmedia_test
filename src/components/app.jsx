@@ -42,6 +42,7 @@ const App = () => {
   const [isSortUp, setIsSortUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
+  const [searchedUser, setSearchedUser] = useState('');
   const sortedUsersByType = users.slice().sort(sortFunction(sortType));
   const sortedUsers = isSortUp ? sortedUsersByType : sortedUsersByType.reverse();
 
@@ -59,7 +60,9 @@ const App = () => {
       <h1>Список пользователей</h1>
       <section>
         <form>
-          <input />
+          <input value={searchedUser} onChange={(evt) => {
+            setSearchedUser(evt.target.value);
+          }} />
           <button type="button">Очистить фильтр</button>
         </form>
         <p>
@@ -96,7 +99,7 @@ const App = () => {
         {
           isLoading
             ? <p>Идет загрузка...</p>
-            : <Table users={sortedUsers}/>
+            : <Table users={sortedUsers} searchedUser={searchedUser}/>
         }
       </section>
     </Fragment>
