@@ -1,7 +1,7 @@
 import React from "react";
 
 const TableRow = (props) => {
-  const { user, deleteRow } = props;
+  const { user, showModal, deleteUser } = props;
   const { id, name, email, registrationDate, rating } = user;
   return (
     <tr className="users-table__row">
@@ -13,7 +13,10 @@ const TableRow = (props) => {
         <button
           className="users-table__button"
           type="button"
-          onClick={() => deleteRow(id)}
+          onClick={() => {
+            showModal(true);
+            deleteUser(id);
+          }}
         >
           <span className="visually-hidden">Удалить</span>
         </button>

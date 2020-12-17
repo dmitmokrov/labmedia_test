@@ -179,3 +179,38 @@ body {
 .pagination__link--active:hover {
   color: #ffffff;
 }
+
+/* Модальное окно */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__message {
+  width: 400px;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.modal__button {
+  margin-right: 20px;
+  padding: 5px 10px;
+  font-weight: bold;
+  background-color: #ffffff;
+  border-radius: 5px;
+  color: #0000ff;
+  border: 1px solid #cccccc;
+}
+
+.modal__button:hover {
+  cursor: pointer;
+}

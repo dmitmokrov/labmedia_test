@@ -3,6 +3,7 @@ import Table from "./table";
 import SearchForm from './search-form';
 import Sort from './sort';
 import Pagination from './pagination';
+import Modal from './modal';
 import { URL, USERS_PER_PAGE, SortType } from '../const';
 import { updateUserToClient, getUsers } from '../utils';
 
@@ -10,6 +11,8 @@ const App = () => {
   const [sortType, setSortType] = useState(SortType.DEFAULT);
   const [isSortUp, setIsSortUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleteRequest, setIsDeleteRequest] = useState(false);
+  const [deletedUserId, setDeletedUserId] = useState(null);
   const [users, setUsers] = useState([]);
   const [searchedUser, setSearchedUser] = useState('');
   const [page, setPage] = useState(1);
@@ -70,7 +73,8 @@ const App = () => {
             ? <p>Идет загрузка...</p>
             : <Table
                 users={usersOnPage}
-                deleteRow={handleDeleteRowClick}
+                showModal={setIsDeleteRequest}
+                deleteUser={setDeletedUserId}
               />
         }
 
@@ -80,6 +84,13 @@ const App = () => {
           goToPage={setPage}
         />
       </section>
+      {
+        isDeleteRequest && <Modal
+          deletedUserId={deletedUserId}
+          showModal={setIsDeleteRequest}
+          deleteRow={handleDeleteRowClick}
+        />
+      }
     </Fragment>
   );
 };

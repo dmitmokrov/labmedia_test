@@ -2,7 +2,7 @@ import React from 'react';
 import TableRow from './table-row';
 
 const Table = (props) => {
-  const { users, deleteRow } = props;
+  const { users, showModal, deleteRow, deleteUser } = props;
 
   return (
     <div className="table-container">
@@ -19,7 +19,12 @@ const Table = (props) => {
         <tbody>
           {
             users.map((user) => (
-              <TableRow key={user.id} user={user} deleteRow={deleteRow}/>
+              <TableRow
+                key={user.id}
+                user={user}
+                showModal={showModal}
+                deleteRow={deleteRow}
+                deleteUser={deleteUser}/>
             ))
           }
         </tbody>
