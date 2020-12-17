@@ -2,8 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import Table from "./table";
 import SearchForm from './search-form';
 import Sort from './sort';
-import { URL, SortType } from '../const';
-import { updateUserToClient, sortFunction } from '../utils';
+import Pagination from './pagination';
+import { URL, USERS_PER_PAGE, SortType } from '../const';
+import { updateUserToClient, getUsers } from '../utils';
 
 const App = () => {
   const [sortType, setSortType] = useState(SortType.DEFAULT);
@@ -11,10 +12,13 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchedUser, setSearchedUser] = useState('');
+  const [page, setPage] = useState(1);
 
   const isClearButtonVisible = sortType !== SortType.DEFAULT || searchedUser;
-  const sortedUsersByType = users.slice().sort(sortFunction(sortType));
-  const sortedUsers = isSortUp ? sortedUsersByType : sortedUsersByType.reverse();
+  const filteredUsers = getUsers(users, sortType, isSortUp, searchedUser);
+  const usersOnPage = filteredUsers.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE);
+  const pages = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
+
 
   const handleClearButtonClick = () => {
     setSortType(SortType.DEFAULT);
@@ -56,17 +60,25 @@ const App = () => {
           clearFilters={handleClearButtonClick}
         />
 
-        <Sort sortUsers={handleSortLinkClick}/>
+        <Sort
+          sortUsers={handleSortLinkClick}
+          sortType={sortType}
+        />
 
         {
           isLoading
             ? <p>Идет загрузка...</p>
             : <Table
-                users={sortedUsers}
-                searchedUser={searchedUser}
+                users={usersOnPage}
                 deleteRow={handleDeleteRowClick}
               />
         }
+
+        <Pagination
+          page={page}
+          pages={pages}
+          goToPage={setPage}
+        />
       </section>
     </Fragment>
   );

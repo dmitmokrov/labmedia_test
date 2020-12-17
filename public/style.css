@@ -1,3 +1,181 @@
-p {
-  color: red;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px;
+  color: #000000;
+  font-size: 14px;
+  background-color: #eeeeee;
+}
+
+/* Вспомогательный класс */
+
+.visually-hidden:not(:focus):not(:active) {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+/* Форма поиска */
+
+.search-form {
+  position: relative;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 10px -10px #999999;
+}
+
+.search-form__input {
+  width: 100%;
+  height: 30px;
+  padding-left: 30px;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #eeeeee;
+  background-image: url("img/search-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  background-position: 5px center;
+}
+
+.search-form__button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 5px 15px;
+  border: none;
+  background-image: url("img/clear-filter-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 10px auto;
+  background-position: 5px center;
+  background-color: transparent;
+}
+
+.search-form__button:hover {
+  cursor: pointer;
+}
+
+/* Сортировка  */
+
+.sort {
+  color: #999999;
+}
+
+.sort__link {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 0;
+  color: inherit;
+  border-bottom: 1px dashed #999999;
+  text-decoration: none;
+}
+
+.sort__link--active {
+  color: #000000;
+  border-bottom-color: #000000;
+}
+
+/* Таблица */
+
+.table-container {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table__row {
+  border-bottom: 1px solid #cccccc;
+}
+
+.users-table__row th,
+.users-table__row td {
+  width: 24%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+.users-table__row td:first-child {
+  font-weight: bold;
+  color: #0000ff;
+}
+
+.users-table__row th:last-child,
+.users-table__row td:last-child {
+  width: 4%;
+}
+
+.users-table__button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  background-image: url("img/delete-icon.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px auto;
+}
+
+.users-table__button:hover {
+  cursor: pointer;
+}
+
+/* Пагинация  */
+
+.pagination {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  color: #000000;
+  list-style: none;
+}
+
+.pagination__link {
+  padding: 5px 10px;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.pagination__link:hover {
+  color: #0000ff;
+}
+
+.pagination__link--active {
+  color: #ffffff;
+  background-color: #0000ff;
+}
+
+.pagination__link--active:hover {
+  color: #ffffff;
 }

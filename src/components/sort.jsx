@@ -2,13 +2,14 @@ import React from 'react';
 import { SortType } from '../const';
 
 const Sort = (props) => {
-  const { sortUsers } = props;
+  const { sortUsers, sortType } = props;
 
   return (
-    <p>
+    <p className="sort">
       Сортировка:
       <a
-        href="#!"
+        className={`sort__link ${sortType === SortType.REGISTRATION_DATE ? `sort__link--active` : ``}`}
+        href="#0"
         onClick={(evt) => {
           evt.preventDefault();
           sortUsers(SortType.REGISTRATION_DATE);
@@ -17,7 +18,8 @@ const Sort = (props) => {
         Дата регистрации
       </a>
       <a
-        href="#!"
+        className={`sort__link ${sortType === SortType.RATING ? `sort__link--active` : ``}`}
+        href="#0"
         onClick={(evt) => {
           evt.preventDefault();
           sortUsers(SortType.RATING);

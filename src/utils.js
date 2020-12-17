@@ -31,4 +31,14 @@ export  const sortFunction = (sortType) => {
   }
 };
 
-export const getFilteredUsers = (arr, str) => arr.filter((elem) => elem.name.toLowerCase().includes(str.toLowerCase()) || elem.email.toLowerCase().includes(str.toLowerCase()));
+const getFilteredUsers = (arr, str) => arr.filter((elem) => elem.name.toLowerCase().includes(str.toLowerCase()) || elem.email.toLowerCase().includes(str.toLowerCase()));
+
+export const getUsers = (users, sortType, sortDirectionIsUp, searchedUser) => {
+  const sortedUsersByType = users.slice().sort(sortFunction(sortType));
+  const sortedUsers = sortDirectionIsUp ? sortedUsersByType : sortedUsersByType.reverse();
+
+  if (searchedUser) {
+    return getFilteredUsers(sortedUsers, searchedUser);
+  }
+  return sortedUsers;
+};

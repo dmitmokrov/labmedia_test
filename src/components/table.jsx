@@ -1,32 +1,30 @@
 import React from 'react';
 import TableRow from './table-row';
-import { getFilteredUsers } from '../utils';
 
 const Table = (props) => {
-  const { users, searchedUser, deleteRow } = props;
-  let filteredUsers = users;
-  if (searchedUser) {
-    filteredUsers = getFilteredUsers(users, searchedUser);
-  }
+  const { users, deleteRow } = props;
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Имя пользователя</th>
-          <th>E-mail</th>
-          <th>Дата регистрации</th>
-          <th>Рейтинг</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          filteredUsers.map((user) => (
-            <TableRow key={user.id} user={user} deleteRow={deleteRow}/>
-          ))
-        }
-      </tbody>
-    </table>
+    <div className="table-container">
+      <table className="users-table">
+        <thead>
+          <tr className="users-table__row">
+            <th>Имя пользователя</th>
+            <th>E-mail</th>
+            <th>Дата регистрации</th>
+            <th>Рейтинг</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            users.map((user) => (
+              <TableRow key={user.id} user={user} deleteRow={deleteRow}/>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
   );
 };
 

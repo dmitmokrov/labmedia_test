@@ -4,13 +4,19 @@ const TableRow = (props) => {
   const { user, deleteRow } = props;
   const { id, name, email, registrationDate, rating } = user;
   return (
-    <tr>
+    <tr className="users-table__row">
       <td>{name}</td>
       <td>{email}</td>
       <td>{new Date(registrationDate).toLocaleDateString()}</td>
       <td>{rating}</td>
       <td>
-        <button type="button" onClick={() => deleteRow(id)}>Удалить</button>
+        <button
+          className="users-table__button"
+          type="button"
+          onClick={() => deleteRow(id)}
+        >
+          <span className="visually-hidden">Удалить</span>
+        </button>
       </td>
     </tr>
   );
