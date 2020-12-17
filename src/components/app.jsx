@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Table from "./table";
-import { SortType } from '../const';
+import SearchForm from './search-form';
+import Sort from './sort';
+import { URL, SortType } from '../const';
 import { updateUserToClient, sortFunction } from '../utils';
 
 const App = () => {
@@ -14,13 +16,13 @@ const App = () => {
   const sortedUsersByType = users.slice().sort(sortFunction(sortType));
   const sortedUsers = isSortUp ? sortedUsersByType : sortedUsersByType.reverse();
 
-  const onClearButtonClick = () => {
+  const handleClearButtonClick = () => {
     setSortType(SortType.DEFAULT);
     setIsSortUp(false);
     setSearchedUser('');
   }
 
-  const onSortLinkClick = (sortLinkType) => {
+  const handleSortLinkClick = (sortLinkType) => {
     setSortType(sortLinkType);
       if (sortType === sortLinkType) {
         setIsSortUp(!isSortUp);
@@ -36,7 +38,7 @@ const App = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch('https://5ebbb8e5f2cfeb001697d05c.mockapi.io/users')
+    fetch(URL)
       .then((res) => res.json())
       .then((users) => users.map((user) => updateUserToClient(user)))
       .then((users) => setUsers(users))
@@ -47,42 +49,23 @@ const App = () => {
     <Fragment>
       <h1>Список пользователей</h1>
       <section>
-        <form>
-          <input value={searchedUser} onChange={(evt) => {
-            setSearchedUser(evt.target.value);
-          }} />
-          {
-            isClearButtonVisible &&
-            <button type="button" onClick={onClearButtonClick}>
-              Очистить фильтр
-            </button>
-          }
-        </form>
-        <p>
-          Сортировка:
-          <a
-            href="#!"
-            onClick={(evt) => {
-              evt.preventDefault();
-              onSortLinkClick(SortType.REGISTRATION_DATE);
-            }}
-          >
-            Дата регистрации
-          </a>
-          <a
-            href="#!"
-            onClick={(evt) => {
-              evt.preventDefault();
-              onSortLinkClick(SortType.RATING);
-            }}
-          >
-            Рейтинг
-          </a>
-        </p>
+        <SearchForm
+          isClearButtonVisible={isClearButtonVisible}
+          searchedUser={searchedUser}
+          setSearchedUser={setSearchedUser}
+          clearFilters={handleClearButtonClick}
+        />
+
+        <Sort sortUsers={handleSortLinkClick}/>
+
         {
           isLoading
             ? <p>Идет загрузка...</p>
-            : <Table users={sortedUsers} searchedUser={searchedUser} deleteRow={handleDeleteRowClick}/>
+            : <Table
+                users={sortedUsers}
+                searchedUser={searchedUser}
+                deleteRow={handleDeleteRowClick}
+              />
         }
       </section>
     </Fragment>
